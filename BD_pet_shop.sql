@@ -1,0 +1,51 @@
+CREATE TABLE cliente(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	cpf VARCHAR(14) NOT NULL
+	data_de_cadastro DATE NOT NULL
+);
+
+CREATE TABLE contato(
+	id SERIAL PRIMARY KEY,
+	tag VARCHAR(50) NOT NULL,
+	tipo_conntato VARCHAR(100) NOT NULL,
+	id_cliente INT REFERENCES cliente(id) NOT NULL
+)
+
+CREATE TABLE endereco(
+	id SERIAL PRIMARY KEY,
+	rua VARCHAR(100) NOT NULL,
+	cidade VARCHAR(70) NOT NULL,
+	bairro VARCHAR(70) NOT NULL,
+	complemento VARCHAR(50) NOT NULL,
+	tag VARCHAR(100) NOT NULL,
+	id_cliente INT REFERENCES cliente(id) NOT NULL,
+)
+
+CREATE TABLE pets(
+	id SERIAL PRIMARY KEY,
+	data_nascimento DATE NOT NULL,
+	nome VARCHAR (60),
+	id_raca INT REFERENCES raca(id) NOT NULL,
+	id_cliente INT REFERENCES cliente(id) NOT NULL
+)
+
+CREATE TABLE RACA(
+	id SERIAL PRIMARY KEY,
+	nome_raca VARCHAR(75)
+)
+
+CREATE TABLE atendimento(
+	id SERIAL PRIMARY KEY,
+	descricao_atend VARCHAR(100) NOT NULL,
+	valor MONEY NOT NULL,
+	data_atend DATE NOT NULL,
+	id_pet INT REFERENCES pets(id) NOT NULL
+)
+
+CREATE TABLE usuario(
+	cpf_usuario VARCHAR(14) PRIMARY KEY REFERENCES cliente(cpf) NOT NULL,
+	nome VARCHAR (100) NOT NULL,
+	perfil VARCHAR(7) NOT NULL,
+	senha VARCHAR(20) NOT NULL,
+)
